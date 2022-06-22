@@ -15,7 +15,8 @@
   "initialPermissions": {
     "endowment:network-access": {},
     "endowment:long-running": {},
-    "snap_confirm": {}
+    "snap_confirm": {},
+    "snap_notify": {}
   },
   "manifestVersion": "0.1"
 }
