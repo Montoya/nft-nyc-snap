@@ -14,7 +14,7 @@ export async function addNFT (contractAddress, id) {
     };
 
     await wallet.request({
-        method: 'snap_updateState',
+        method: 'snap_manageState',
         params: ['update', newState]
     });
 }
@@ -29,14 +29,14 @@ export async function removeNFT(contractAddress, id) {
     delete newState[contractAddress][id];
 
     await wallet.request({
-        method: 'snap_updateState',
+        method: 'snap_manageState',
         params: ['update', newState]
     });
 }
 
 export async function removeAllNFTs() {
     await wallet.request({
-        method: 'snap_updateState',
+        method: 'snap_manageState',
         params: ['update', {}]
     });
 }
