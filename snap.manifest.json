@@ -3,7 +3,7 @@
   "description": "The nft-nyc-snap Snap.",
   "proposedName": "nft-nyc-snap",
   "source": {
-    "shasum": "JKB9oexqrRXK28RDNDaE6b0wld1pu+K+nVHoN5GMVIA=",
+    "shasum": "eBTpR6xg9MrNhfllsyHAAdfznGF9xPNwvrZtpipvaRA=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
