@@ -77,7 +77,7 @@ export async function getNFTWatchList() {
 
 async function sendNotifications(notifications) {
     for (const notification of notifications) {
-        setTimeout(() => {
+        setTimeout(async () => {
             await wallet.request({
                 method: 'snap_notify',
                 params: [

@@ -10,11 +10,9 @@ import {
 module.exports.onRpcRequest = async ({ origin, request }) => {
   switch (request.method) {
     case 'addNFT':
-      const { params } = request;
-      await addNFT(params.contractAddress, params.id);
+      await addNFT(request.params.contractAddress, request.params.id);
     case 'removeNFT':
-      const { params } = request;
-      await removeNFT(params.contractAddress, params.id);
+      await removeNFT(request.params.contractAddress, request.params.id);
     case 'removeAllNFTs':
       await removeAllNFTs();
     case 'startWatching':
