@@ -3,12 +3,12 @@
   "description": "The nft-nyc-snap Snap.",
   "proposedName": "nft-nyc-snap",
   "source": {
-    "shasum": "WkaphGiyaV/JZ7RcYPSYQhstvdZFqF9jqyyUpYKXJ/Y=",
+    "shasum": "9kQDU9weg5qfPuygIfTmXKxDmGa6P+O13vMT9th4Wic=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "packageName": "nft-nyc-snap",
-        "registry": "https://registry.npmjs.org",
+        "registry": "https://registry.npmjs.org"
       }
     }
   },
