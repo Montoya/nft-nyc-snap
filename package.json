@@ -1,0 +1,9 @@
+{
+  "name": "nft-nyc-snap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@metamask/snaps-cli": "^0.16.0"
+  }
+}

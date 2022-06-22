@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "description": "The nft-nyc-snap Snap.",
+  "proposedName": "nft-nyc-snap",
+  "source": {
+    "shasum": "WkaphGiyaV/JZ7RcYPSYQhstvdZFqF9jqyyUpYKXJ/Y=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "packageName": "nft-nyc-snap",
+        "registry": "https://registry.npmjs.org",
+      }
+    }
+  },
+  "initialPermissions": {
+    "endowment:network-access": {},
+    "endowment:long-running": {},
+    "snap_confirm": {}
+  },
+  "manifestVersion": "0.1"
+}
