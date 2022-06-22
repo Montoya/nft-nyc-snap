@@ -1,44 +1,96 @@
 <!doctype html>
 <html>
   <head>
-    <title>Hello, Snaps!</title>
-    <link rel="icon" type="image/svg" href="./images/icon.svg"/>
+    <title>OpenSea NFT Watcher</title>
   </head>
 
   <body>
-    <h1>Hello, Snaps!</h1>
+    <h1>Welcome to OpenSea NFT Watcher!</h1>
     <details>
       <summary>Instructions</summary>
       <ul>
-        <li>First, click "Connect". Then, try out the other buttons!</li>
-        <li>Please note that:</li>
-        <ul>
-          <li>
-            The <code>snap.manifest.json</code> and <code>package.json</code> must be located in the server root directory..
-          </li>
-          <li>
-            The Snap bundle must be hosted at the location specified by the <code>location</code> field of <code>snap.manifest.json</code>.
-          </li>
-        </ul>
+        <li>Click "Connect". Then, try adding some NFTs and watching them!</li>
+        <li>In order to add an NFT to your watchlist, you must input the contract address and token ID seen in the details section of the NFT listing on OpenSea</li>
+        <li>In order to remove an NFT, you must input the same and hit the remove NFT button</li>
       </ul>
     </details>
     <br/>
 
-    <button class="connect">Connect</button>
-    <button class="sendHello">Send Hello</button>
+    <button id="connect">Connect</button>
+
+    <br/>
+
+    <h2>Add NFT to Watch List</h2>
+    <br/>
+    <label for="addContractAddress">Contract Address</label>
+    <input id="addContractAddress" />
+    <br/>
+    <label for="addTokenId">Token ID</label>
+    <input id="addTokenId" />
+    <br/>
+    <button id="addNFT">Add NFT</button>
+
+    <br/>
+    <br/>
+
+    <h2>Remove NFT from Watch List</h2>
+    <br/>
+    <label for="removeContractAddress">Contract Address</label>
+    <input id="removeContractAddress" />
+    <br/>
+    <label for="removeTokenId">Token ID</label>
+    <input id="removeTokenId" />
+    <br/>
+    <button id="removeNFT">Remove NFT</button>
+
+    <br/>
+    <br/>
+
+    <h2>Remove All NFTs from Watch List</h2>
+    <br/>
+    <button id="removeAllNFTs">Remove all NFTs</button>
+
+    <br/>
+    <br/>
+
+    <h2>Start watching your NFTs</h2>
+    <br/>
+    <button id="startWatch">Start Watch</button>
+
+    <br/>
+    <br/>
+
+    <h2>Remove All NFTs from Watch List</h2>
+    <br/>
+    <button id="stopWatch">Stop Watch</button>
+
+    <h2>Current Watch List:</h2>
+    <br/>
+    <div id="watch-list"></div>
+
+
   </body>
 
   <script>
     const snapId = `local:${window.location.href}`;
 
-    const connectButton = document.querySelector('button.connect')
-    const sendButton = document.querySelector('button.sendHello')
+    const connectButton = document.querySelector('#connect')
+    const addButton = document.querySelector('#addNFT')
+    const removeButton = document.querySelector('#removeNFT');
+    const removeAllButton = document.querySelector('#removeAllNFTs');
+    const startButton = document.querySelector('#startWatch');
+    const stopButton = document.querySelector('#stopWatch');
+    const watchList = document.querySelector('#watch-list');
 
     connectButton.addEventListener('click', connect)
-    sendButton.addEventListener('click', send)
+    addButton.addEventListener('click', add)
+    removeButton.addEventListener('click', remove)
+    removeAllButton.addEventListener('click', removeAll)
+    startButton.addEventListener('click', startWatch)
+    stopButton.addEventListener('click', stopWatch)
 
     // here we get permissions to interact with and install the snap
-    async function connect () {
+    async function connect() {
       await ethereum.request({
         method: 'wallet_enable',
         params: [{
@@ -47,15 +99,106 @@
       })
     }
 
-    // here we call the snap's "hello" method
-    async function send () {
+    async function add() {
+      const contractAddress = document.querySelector('#addContractAddress').value;
+      const id = document.querySelector('#addTokenId').value;
       try {
         const response = await ethereum.request({
           method: 'wallet_invokeSnap',
           params: [snapId, {
-            method: 'hello'
+            method: 'addNFT',
+            params: [{ contractAddress, id }]
           }]
         })
+        await getWatchList();
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+
+    async function remove() {
+      const contractAddress = document.querySelector('#removeContractAddress').value;
+      const id = document.querySelector('#removeTokenId').value;
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: [snapId, {
+            method: 'removeNFT',
+            params: [{ contractAddress, id }]
+          }]
+        })
+        await getWatchList();
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+
+    async function removeAll() {
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: [snapId, {
+            method: 'removeAllNFTs',
+          }]
+        })
+        await getWatchList();
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+
+    async function startWatching() {
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: [snapId, {
+            method: 'startWatching',
+          }]
+        })
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+
+    async function stopWatching() {
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: [snapId, {
+            method: 'stopWatching',
+          }]
+        })
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+
+    async function getWatchList() {
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: [snapId, {
+            method: 'getWatchList'
+          }]
+        })
+        const contractAddresses = Object.keys(response);
+        if (!contractAddresses.length) return;
+        let html = ``;
+        for (const address of contractAddresses) {
+          html += `<h3>${address}</h3>`
+          html += `<ul>`
+          const ids = Object.keys(address);
+          for (const id of ids) {
+            html += `<li>${id}</li>`
+          }
+          html += `</ul><br/>`
+        }
+        watchList.innerHTML = html;
       } catch (err) {
         console.error(err)
         alert('Problem happened: ' + err.message || err)

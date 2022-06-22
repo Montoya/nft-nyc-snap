@@ -1,5 +1,6 @@
 import { 
-  addNFT, 
+  addNFT,
+  getNFTWatchList, 
   removeNFT, 
   removeAllNFTs,
   startWatching, 
@@ -20,6 +21,8 @@ module.exports.onRpcRequest = async ({ origin, request }) => {
       startWatching();
     case 'stopWatching':
       stopWatching();
+    case 'getWatchList':
+      return getNFTWatchList();
     default:
       throw new Error('method not found.');
   }
