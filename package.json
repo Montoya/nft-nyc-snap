@@ -1,12 +1,12 @@
 {
   "name": "nft-nyc-snap",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A simple MetaMask Snap that watches an OpenSea NFT.",
   "license": "MIT",
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hmalik88/nft-nyc-snap.git"
+    "url": "https://github.com/Montoya/nft-nyc-snap.git"
   },
   "files": [
     "dist/",

@@ -1,6 +1,6 @@
 import { constructNotifications, fetchEvents } from "./utils";
 
-export async function addNFT (contractAddress, id) {
+export async function addNFT (contractAddress, id) {/*
     const currState = await getNFTWatchList();
 
     if (currState[contractAddress] && currState[contractAddress][id]) {
@@ -16,10 +16,14 @@ export async function addNFT (contractAddress, id) {
     await wallet.request({
         method: 'snap_manageState',
         params: ['update', newState]
-    });
+    });*/
+    return await wallet.request({
+        method: 'snap_manageState',
+        params: ['update', {nft:[{contractAddress:contractAddress,id:id}]}]
+    }); 
 }
 
-export async function removeNFT(contractAddress, id) {
+export async function removeNFT(contractAddress, id) {/*
     const newState = await getNFTWatchList();
 
     if (!newState[contractAddress] || !newState[contractAddress][id]) {
@@ -31,7 +35,8 @@ export async function removeNFT(contractAddress, id) {
     await wallet.request({
         method: 'snap_manageState',
         params: ['update', newState]
-    });
+    });*/
+    return await removeAllNFTs(); 
 }
 
 export async function removeAllNFTs() {
@@ -44,16 +49,7 @@ export async function removeAllNFTs() {
 let interval;
 
 export async function startWatching() {
-    await wallet.request({
-        method: 'snap_notify',
-        params: [
-            {
-                type: 'inApp',
-                message: `Hi there!`
-            }
-        ],
-    });
-    /*if (interval) throw new Error('Already watching!');
+    if (interval) throw new Error('Already watching!');
     const header = 'NFT watch request'
     const message = 'Would you like to watch your list of NFTs?'
     const res = await wallet.request({
@@ -65,9 +61,8 @@ export async function startWatching() {
     interval = setInterval(async () => {
         const eventsLists = await fetchEvents();
         const notifications = constructNotifications(eventsLists);
-        const notifications = [{name:"NFTW",eventType:"Test",eventTimestamp:"now"}]; 
         await sendNotifications(notifications);
-    }, twoMinutes); */
+    }, twoMinutes); 
 }
 
 export function stopWatching() {
@@ -92,7 +87,7 @@ async function sendNotifications(notifications) {
                 method: 'snap_notify',
                 params: [
                     {
-                        type: 'native',
+                        type: 'inApp',
                         message: `${notification.name} had a ${notification.eventType} event on ${notification.eventTimestamp}`
                     }
                 ],

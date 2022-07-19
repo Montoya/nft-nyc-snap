@@ -16,11 +16,11 @@ module.exports.onRpcRequest = async ({ origin, request }) => {
     case 'removeAllNFTs':
       return await removeAllNFTs();
     case 'startWatching':
-      return startWatching();
+      return await startWatching();
     case 'stopWatching':
       return stopWatching();
     case 'getWatchList':
-      return getNFTWatchList();
+      return await getNFTWatchList();
     default:
       throw new Error('method not found.');
   }

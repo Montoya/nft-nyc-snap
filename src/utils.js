@@ -14,7 +14,7 @@ async function updateTimestamps(currList, addressAndIdPairs, timestamp) {
 }
 
 export async function fetchEvents() {
-    const currList = await getNFTWatchList();
+    const currList = await getNFTWatchList();/*
     const addresses = Object.keys(currList);
     const eventPromises = [];
 
@@ -29,6 +29,7 @@ export async function fetchEvents() {
              }));
         }
     }
+    
 
     const eventsLists = (await Promise.allSettled(eventPromises))
         .filter(
@@ -42,6 +43,24 @@ export async function fetchEvents() {
     await updateTimestamps(currList, addressAndIdPairs, time)
 
     return eventsLists;
+    */
+   console.log(currList); 
+   const address = currList.nft[0].address; 
+   const id = currList.nft[0].id; 
+   const lastRequested = (new Date()).getTime() / 1000 - 1000; 
+   const eventPromises = []; 
+   eventPromises.push(fetch(`https://testnets-api.opensea.io/api/v1/events?only_opensea=true&limit=5&asset_contract_address=${address}&token_id=${id}&occurred_after=${lastRequested}`, {
+        headers: {
+            'Accept': 'application/json',
+        } 
+    }));
+    const eventsLists = (await Promise.allSettled(eventPromises))
+        .filter(
+        promise => promise.status === 'fulfilled')
+        .map(promise => promise.value.asset_events);
+
+    const addressAndIdPairs = constructContractAddressAndIdTuples(eventsLists);
+    return eventsLists; 
 }
 
 function constructContractAddressAndIdTuples(lists) {
