@@ -44,12 +44,11 @@ export async function fetchEvents() {
 
     return eventsLists;
     */
-   console.log(currList); 
-   const address = currList.nft[0].address; 
-   const id = currList.nft[0].id; 
-   const lastRequested = (new Date()).getTime() / 1000 - 1000; 
+   const address = '0xeec8b8450c7661c5935c67a3e9d68be6c87ba642'; //currList.nft[0].address; 
+   const id = '20'; //currList.nft[0].id; 
+   const lastRequested = parseInt((new Date()).getTime() / 1000 - 1000000); 
    const eventPromises = []; 
-   eventPromises.push(fetch(`https://testnets-api.opensea.io/api/v1/events?only_opensea=true&limit=5&asset_contract_address=${address}&token_id=${id}&occurred_after=${lastRequested}`, {
+   eventPromises.push(fetch(`https://testnets-api.opensea.io/api/v1/events?limit=5&asset_contract_address=${address}&token_id=${id}&occurred_after=${lastRequested}`, {
         headers: {
             'Accept': 'application/json',
         } 

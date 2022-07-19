@@ -17,9 +17,11 @@ export async function addNFT (contractAddress, id) {/*
         method: 'snap_manageState',
         params: ['update', newState]
     });*/
+    const state = {nft:[]}; 
+    state.nft.push({contractAddress:contractAddress,id:id}); 
     return await wallet.request({
         method: 'snap_manageState',
-        params: ['update', {nft:[{contractAddress:contractAddress,id:id}]}]
+        params: ['update', state]
     }); 
 }
 
@@ -50,19 +52,22 @@ let interval;
 
 export async function startWatching() {
     if (interval) throw new Error('Already watching!');
+    alert("GOT HERE"); 
     const header = 'NFT watch request'
     const message = 'Would you like to watch your list of NFTs?'
     const res = await wallet.request({
         method: 'snap_confirm',
         params: [{ prompt: header, textAreaContent: message }],
       });
-    if (!res) throw new Error('Watch request denied'); 
+    if (!res) throw new Error('Watch request denied'); /*
     const twoMinutes = 1000 * 60 * 2;
     interval = setInterval(async () => {
         const eventsLists = await fetchEvents();
         const notifications = constructNotifications(eventsLists);
         await sendNotifications(notifications);
-    }, twoMinutes); 
+    }, twoMinutes); */
+    const eventsLists = await fetchEvents(); 
+    console.log(eventsLists); 
 }
 
 export function stopWatching() {

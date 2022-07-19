@@ -1,5 +1,5 @@
 {
-  "version": "1.0.6",
+  "version": "1.0.12",
   "proposedName": "OpenSea Watcher Snap",
   "description": "A simple MetaMask Snap that watches OpenSea.",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/Montoya/nft-nyc-snap.git"
   },
   "source": {
-    "shasum": "Ef1tarj/TFHIV9Mc3ADqJJ6rfjMXITC33EO32VwrxWo=",
+    "shasum": "Ofnaq0UQ5qJTgqOcmgilmcjrqfZEJUxzkvk5MFNIFVI=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

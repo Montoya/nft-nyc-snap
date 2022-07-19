@@ -1,6 +1,6 @@
 {
   "name": "nft-nyc-snap",
-  "version": "1.0.6",
+  "version": "1.0.12",
   "description": "A simple MetaMask Snap that watches an OpenSea NFT.",
   "license": "MIT",
   "main": "src/index.js",
