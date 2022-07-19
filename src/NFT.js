@@ -44,20 +44,30 @@ export async function removeAllNFTs() {
 let interval;
 
 export async function startWatching() {
-    if (interval) throw new Error('Already watching!');
+    await wallet.request({
+        method: 'snap_notify',
+        params: [
+            {
+                type: 'inApp',
+                message: `Hi there!`
+            }
+        ],
+    });
+    /*if (interval) throw new Error('Already watching!');
     const header = 'NFT watch request'
     const message = 'Would you like to watch your list of NFTs?'
     const res = await wallet.request({
         method: 'snap_confirm',
         params: [{ prompt: header, textAreaContent: message }],
       });
-    if (!res) throw new Error('Watch request denied');
+    if (!res) throw new Error('Watch request denied'); 
     const twoMinutes = 1000 * 60 * 2;
     interval = setInterval(async () => {
         const eventsLists = await fetchEvents();
         const notifications = constructNotifications(eventsLists);
+        const notifications = [{name:"NFTW",eventType:"Test",eventTimestamp:"now"}]; 
         await sendNotifications(notifications);
-    }, twoMinutes); 
+    }, twoMinutes); */
 }
 
 export function stopWatching() {

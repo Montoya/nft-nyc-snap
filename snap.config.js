@@ -1,8 +1,5 @@
 module.exports = {
-  "cliOptions": {
-    "dist": "dist",
-    "outfileName": "bundle.js",
-    "src": "index.js"
-  }
-}
-    
+  cliOptions: {
+    port: 8080,
+  },
+};

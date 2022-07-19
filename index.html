@@ -68,6 +68,13 @@
     <br/>
     <br/>
 
+    <h2>Get Watch List</h2>
+    <br/>
+    <button id="getWatchList">Get Watch List</button>
+
+    <br/>
+    <br/>
+
     <h2>Current Watch List:</h2>
     <br/>
     <div id="watch-list"></div>
@@ -84,6 +91,7 @@
     const removeAllButton = document.querySelector('#removeAllNFTs');
     const startButton = document.querySelector('#startWatch');
     const stopButton = document.querySelector('#stopWatch');
+    const getButton = document.querySelector('#getWatchList');
     const watchList = document.querySelector('#watch-list');
 
     connectButton.addEventListener('click', connect)
@@ -92,6 +100,7 @@
     removeAllButton.addEventListener('click', removeAll)
     startButton.addEventListener('click', startWatch)
     stopButton.addEventListener('click', stopWatch)
+    getButton.addEventListener('click',getWatchList)
 
     // here we get permissions to interact with and install the snap
     async function connect() {
@@ -191,7 +200,10 @@
           }]
         })
         const contractAddresses = Object.keys(response);
-        if (!contractAddresses.length) return;
+        if (!contractAddresses.length) {
+          watchList.innerHTML = '<p>Empty!</p>'
+          return;
+        }
         let html = ``;
         for (const address of contractAddresses) {
           html += `<h3>${address}</h3>`
